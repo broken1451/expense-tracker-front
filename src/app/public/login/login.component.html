@@ -1,0 +1,33 @@
+<div class="login-container">
+    <h1>Iniciar Sesión</h1>
+    <form id="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" style="margin-bottom: 20px;">
+        <div class="input-group">
+            <label for="username">Correo:</label>
+            <input type="text" id="username" name="username" formControlName="email" required>
+            @if (campoNoEsValido('email')) {
+                <div  style="margin-top: 5px; color: red;">
+                    El correo es invalido
+                </div>
+            }
+        </div>
+        <div class="input-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password"  formControlName="password" required>
+            @if (campoNoEsValido('password')) {
+                <div  style="margin-top: 5px; color: red;">
+                    El password es requerido
+                </div>
+            }
+        </div>
+        <button [ngClass]="{'disablebtn': loginForm.invalid}" [disabled]="loginForm.invalid" type="submit" class="login-button">Acceder</button>
+        <div class="links">
+            <a style="cursor: pointer;" (click)="goto('/public/register')">Crear una cuenta</a><br>
+            <a style="cursor: pointer;" (click)="goto('/public/forgot-password')">¿Olvidaste tu contraseña?</a>
+        </div>
+    </form>
+
+    @if (loading()) {
+        <app-loading />
+    }
+</div>
+

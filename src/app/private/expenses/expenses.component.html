@@ -1,0 +1,108 @@
+<main>
+    <section class="expenses-table-container">
+        <h2>Lista de Gastos</h2>
+
+        <form [formGroup]="expenseForm"  (ngSubmit)="onSubmit()">
+            <div class="filters-container">
+                <label for="search-expenses">Buscar:</label>
+                <input type="text" id="search-expenses" (keyup)="onkeyPress($event)" formControlName="description"  placeholder="Descripción...">
+    
+                <label for="category-filter">Categoría:</label>
+                <select id="category-filter" formControlName="orderBy" (change)="onCategoryChange($event)">
+                    <option value="" disabled selected>Seleccione una categoría</option>
+                    @for (item of categories(); track item) {
+                        <option [value]="item.value">{{item.name}}</option>
+                    }
+                </select>
+    
+                <label for="date-filter">Fecha:</label>
+                <input type="date" id="date-filter" 
+                       (input)="onDateChange($event)"
+                       [min]="minDate()" [max]="tomorrow()" formControlName="fecha" >
+    
+    
+                <label for="start-date">Desde:</label>
+                <input type="date" id="start-date" class="date-input" 
+                       [min]="startDateNinDate()" [max]="tomorrowstartDate()" formControlName="fechaStart">
+
+                <label for="end-date">Hasta:</label>
+                <input type="date" id="end-date" class="date-input" 
+                       [min]="endDateminDate()" [max]="tomorrowEndDate()" formControlName="fechaEnd">
+    
+                <button class="filter-button" (click)="searchByRangeDate()">Buscar por rango</button>
+                <button  class="filter-button" (click)="findByLastWeek()">Última Semana</button>
+                <button  class="filter-button" (click)="findByLastMonth()">Último Mes</button>
+                <button  class="filter-button" (click)="findByLast3Months()">Últimos 3 Meses</button>
+            </div>
+        </form>
+        <table id="expenses-table">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="expenses-table-body">
+                @for (item of (auxExpenses() | orderBy: order() | orderByDate:fechaFilter()); track item) {
+                    <tr>
+                        <td>{{item.description}}</td>
+                        <td>{{item.category}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.amount | currency:'CLP':'$':'1.0-0':'es-CL'}}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-button edit-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="editExpense(item)">Editar</button>
+                                <button class="action-button delete-button" (click)="deleteExpense(item)">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+        </table>
+    </section>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="expenseeEditForm" (ngSubmit)="onSubmitEdit()">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Gasto</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Description</label>
+                      <input type="text" formControlName="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Categoria</label>
+                        <select class="form-select" aria-label="Default select example" formControlName="category">
+                            <option value="" disabled selected>Seleccione una categoría</option>
+                            @for (item of categories(); track item) {
+                                <option [value]="item.value">{{item.name}}</option>
+                            }
+                          </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="amount">Monto:</label>
+                        <input class="form-control" formControlName="amount" type="number" id="amount" name="amount" step="0.01" required > 
+                    </div>
+                  </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+            </div>
+        </form>
+      
+    </div>
+    </div>
+  </div>

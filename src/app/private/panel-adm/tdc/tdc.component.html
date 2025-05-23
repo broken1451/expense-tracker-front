@@ -1,0 +1,301 @@
+@let tdcs = creditCards();
+
+<div class="dashboard-container">
+    <!-- <div style="display: flex;justify-content: center;"> -->
+    <div class="header">
+        <h1>Gestión Detallada de Tarjetas de Crédito</h1>
+    </div>
+    <section id="gestion-tarjetas">
+        <h2>Gestión de Tarjetas</h2>
+        <div class="formulario-tarjeta">
+            <h3>Nueva Tarjeta</h3>
+            <form [formGroup]="createTDCform" novalidate (ngSubmit)="createTDC()">
+                <label for="nombre-tarjeta">Nombre:</label>
+                <input type="text" id="nombre-tarjeta" formControlName="name"><br>
+                <label for="limite-credito">Límite de Crédito:</label>
+                <input type="number" id="limite-credito" formControlName="creditLimit"><br>
+                <label for="tasa-interes">Tasa de Interés Anual (%):</label>
+                <input type="number" step="0.01" id="tasa-interes" formControlName="annualInterestRate"><br>
+                <label for="fecha-otorgacion">Fecha de Otorgación:</label>
+                <input type="date" id="fecha-pago" formControlName="grantDate" [min]="minDate()"><br>
+                <label for="fecha-vencimiento">Fecha de Vencimiento:</label>
+                <input type="date" id="fecha-cierre" formControlName="dueDate" [max]="minDateClosing()"
+                    [min]="minDatePaid()"><br>
+                <button id="agregar-tarjeta-btn">Agregar Tarjeta</button>
+            </form>
+        </div>
+
+        <h3>Tarjetas Registradas</h3>
+        <div id="lista-tarjetas">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Límite</th>
+                        <th>Interés Anual (%)</th>
+                        <th>Vencimiento</th>
+                        <th>Otorgación</th>
+                        <th class="acciones-columna">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of tdcs; track item._id) {
+                    <tr>
+                        <td data-label="Nombre">{{item.name | titlecase }}</td>
+                        <td data-label="Límite">{{item.creditLimit | currency:'CLP':'$':'1.0-0':'es-CL'}}</td>
+                        <td data-label="Interés Anual (%)">{{item.annualInterestRate}}</td>
+                        <td data-label="Cierre">{{item.dueDate | formatDate }}</td>
+                        <td data-label="Pago">{{item.grantDate | formatDate }}</td>
+                        <td class="acciones-columna">
+                            <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn-editar"
+                                data-tipo="tarjeta" (click)="editTDC(item)">Editar</button>
+                            <button class="btn-eliminar" data-tipo="tarjeta" (click)="deleteTdc(item)">Eliminar</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @if (tdcs!.length > 0) {
+    <section id="gestion-transacciones">
+        <h2>Gestión de Transacciones con Cuotas</h2>
+        <form [formGroup]="gestionTdcForm" novalidate (ngSubmit)="createTransaction()">
+            <div class="formulario-transaccion">
+                <h3>Nueva Transacción</h3>
+                <div>
+                    <label for="tarjeta-transaccion">Tarjeta:</label>
+                    <select id="tarjeta-transaccion" formControlName="tarjeta">
+                        <option value="" disabled selected>Seleccionar Tarjeta</option>
+                        @for (item of tdcs; track item._id) {
+                        <option [value]="item.name">{{ item.name | titlecase }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div>
+                    <label for="descripcion-transaccion">Descripción:</label>
+                    <input type="text" id="descripcion-transaccion" formControlName="description">
+                </div>
+                <div>
+                    <label for="monto-transaccion">Monto Total: {{montoTotal()}}</label>
+                    <input type="number" id="monto-transaccion" (input)="calevent($event)"
+                        formControlName="totalAmount">
+                </div>
+                <div>
+                    <label for="fecha-transaccion">Fecha de Compra:</label>
+                    <input type="date" id="fecha-transaccion" [min]="minDate()" formControlName="dayBuy">
+                </div>
+                <div>
+                    <label for="fecha-transaccion">Próximo Pago:</label>
+                    <input type="date" id="fecha-transaccion" [min]="minDatePaid()" formControlName="nextPayment">
+                </div>
+                <div>
+                    <label for="numero-cuotas">Número de Cuotas:{{nroCuota()}}</label>
+                    <input type="number" id="numero-cuotas" value="1" min="1" (input)="calcularCuota($event)"
+                        formControlName="installments">
+                </div>
+                <div>
+                    <label for="interes-compra-porcentaje">Interés de la Compra (%):{{interesCompra()}}</label>
+                    <input type="number" id="interes-compra-porcentaje" (input)="calInteres($event)"
+                        formControlName="interestPurchase">
+                </div>
+                <div>
+                    <label for="monto-cuota">Monto por Cuota (Calculado):</label>
+                    <input type="number" id="monto-cuota" readonly formControlName="installmentAmount">
+                </div>
+                <div>
+                    <label for="interes-total-compra">Interés Total de la Compra:</label>
+                    <input type="number" id="interes-total-compra" readonly
+                        formControlName="totalInterestPerInstallment">
+                </div>
+                <button id="agregar-transaccion-btn">Agregar Transacción</button>
+            </div>
+        </form>
+
+        <h3>Transacciones Registradas</h3>
+        <div id="lista-transacciones">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha Compra</th>
+                        <th>Descripción</th>
+                        <th>Tarjeta</th>
+                        <th>Monto Total</th>
+                        <th>Interés (%)</th>
+                        <th>Cuotas</th>
+                        <th>Monto Cuota</th>
+                        <th>Interés Total</th>
+                        <th>Próximo Pago</th>
+                        <th>Estado</th>
+                        <th class="acciones-columna">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of creditCardsTransactions(); track $index) {
+                    <tr>
+                        <td data-label="Fecha Compra">{{item.dayBuy | formatDate}}</td>
+                        <td data-label="Descripción">{{item.description}}</td>
+                        <td data-label="Tarjeta">{{item.tarjeta}}</td>
+                        <td data-label="Monto Total">{{item.totalAmount}}</td>
+                        <td data-label="Interés (%)">{{item.interestPurchase | currency:'CLP':'$':'1.0-0':'es-CL'}}</td>
+                        <td data-label="Cuotas">{{item.installments}}</td>
+                        <td data-label="Monto Cuota">{{item.installmentAmount | currency:'CLP':'$':'1.0-0':'es-CL'}}
+                        </td>
+                        <td data-label="Interés Total">{{item.totalInterestPerInstallment |
+                            currency:'CLP':'$':'1.0-0':'es-CL'}}</td>
+                        <td data-label="Próximo Pago">{{item.nextPayment | formatDate}}</td>
+                        <td data-label="Estado">{{item.state.state}} ({{item.state.paid}}/{{item.state.pending}})</td>
+                        <td class="acciones-columna">
+                            <button data-bs-toggle="modal" data-bs-target="#staticBackdrop1" class="btn-editar"
+                                data-tipo="tarjeta" (click)="updateTransaction(item)" data-tipo="transaccion"
+                                data-id="trans-1">Editar</button>
+                            <button class="btn-eliminar" data-tipo="transaccion" data-id="trans-1" (click)="deleteTransaction(item)">Eliminar</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    }
+
+
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade mi-modal-personalizado" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="add-user-form" [formGroup]="tdcEditForm" (ngSubmit)="editTDCSubmit()">
+                <div class="form-group">
+                    <label for="new-username">Nombre Tarjeta:</label>
+                    <input type="text" id="new-username" name="new-username" formControlName="name">
+                </div>
+                <div class="form-group">
+                    <label for="new-apellido">Limite:</label>
+                    <input type="number" id="new-apellido" name="new-apellido" formControlName="creditLimit">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="new-salary">Interés Anual (%):</label>
+                    <input type="number" id="new-salary" formControlName="annualInterestRate">
+                </div>
+
+                <div class="form-group">
+                    <label for="new-salary">Vencimiento:</label>
+                    <input type="date" id="fecha-vencimiento" [max]="minDateClosing()" [min]="minDatePaid()"
+                        formControlName="dueDate"><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-salary">Otorgación:</label>
+                    <input type="date" [min]="minDate()" id="fecha-otorgacion" formControlName="grantDate"><br>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar TDC</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="modal fade mi-modal-personalizado" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="add-user-form" [formGroup]="gestionTrasactionForm" (ngSubmit)="updateTransactionSubmit()">
+
+                <div class="form-group">
+                    <label for="new-salary">Fecha Compra:</label>
+                    <input type="date" [min]="minDate()" id="fecha-otorgacion" formControlName="dayBuy"><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-username">Descripción:</label>
+                    <input type="text" id="new-username" name="new-username" formControlName="description">
+                </div>
+
+                <div class="form-group">
+                    <label for="new-username">Tarjeta:</label>
+                    <input type="text" id="new-username" name="new-username" formControlName="tarjeta">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="new-apellido">Monto Total:</label>
+                    <input type="number" id="new-apellido" name="new-apellido" formControlName="totalAmount">
+                </div>
+                <div class="form-group">
+                    <label for="new-apellido">Interés (%):</label>
+                    <input type="number" id="new-apellido" name="new-apellido" formControlName="interestPurchase">
+                </div>
+                <div class="form-group">
+                    <label for="new-apellido">Cuotas:</label>
+                    <input type="number" id="new-apellido" name="new-apellido" formControlName="installments">
+                </div>
+                <div class="form-group">
+                    <label for="new-apellido">Monto Cuota:</label>
+                    <input type="number" id="new-apellido" name="new-apellido" formControlName="installmentAmount">
+                </div>
+                <div class="form-group">
+                    <label for="new-apellido">Interés Total:</label>
+                    <input type="number" id="new-apellido" name="new-apellido"
+                        formControlName="totalInterestPerInstallment">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="new-username">Próximo Pago:</label>
+                    <input type="date" id="fecha-transaccion" [min]="minDatePaid()" formControlName="nextPayment">
+                </div>
+
+                <div class="form-group">
+                    <label for="new-username">Estado:</label>
+                    <select id="tarjeta-transaccion" formControlName="state">
+                        <option value="" disabled selected>Estado</option>
+                        @for (item of states(); track item) {
+                            <option [value]="item">{{ item }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-username">Pendientes:</label>
+                    <select id="tarjeta-transaccion" formControlName="pending">
+                        <option value="" disabled selected>Pendientes:</option>
+                        @for (item of pendingIntallments(); track item) {
+                            <option [value]="item" disabled>{{  item  }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-username">Pagadas:</label>
+                    <select id="tarjeta-transaccion" formControlName="paid" (change)="updatePaid($event)">
+                        <option value="" disabled selected>Pagadas:</option>
+                        @for (item of pendingIntallments(); track item) {
+                            <option [value]="item">{{  item  }}</option>
+                        }
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Actualizar
+                        Transaccion</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

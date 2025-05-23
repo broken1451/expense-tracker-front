@@ -1,0 +1,356 @@
+.dashboard-container {
+
+    max-width: 1200px; /* Aumenté el ancho máximo para más flexibilidad en pantallas grandes */
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    color: #3778c2;
+    margin-bottom: 5px;
+    font-size: 2em;
+}
+
+h2 {
+    color: #3778c2 !important;
+    border-bottom: 1px solid #eee !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 15px !important;
+    font-size: 1.5em !important;
+}
+
+/* Estilos para los formularios */
+.formulario-tarjeta, .formulario-transaccion {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.formulario-tarjeta h3, .formulario-transaccion h3 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+label {
+    display: block; /* Cambiado a block para que las etiquetas ocupen una línea completa en pantallas pequeñas */
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%; /* Los inputs ocuparán el ancho completo en pantallas pequeñas */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+button {
+    background-color: #3778c2;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Para que los botones no ocupen todo el ancho */
+    margin-top: 10px; /* Espacio entre los botones si se apilan */
+}
+
+button:hover {
+    background-color: #275e8e;
+}
+
+/* Estilos para las listas (tablas) */
+#lista-tarjetas, #lista-transacciones {
+    margin-top: 15px;
+    overflow-x: auto; /* Permite el scroll horizontal en pantallas pequeñas */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+}
+
+thead th {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    font-size: 0.9em; /* Reducir un poco la fuente en pantallas pequeñas */
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.acciones-columna {
+    text-align: center;
+    white-space: nowrap; /* Evita que los botones se rompan en varias líneas */
+}
+
+.btn-editar, .btn-eliminar {
+    background-color: #5cb85c;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar {
+    background-color: #d9534f;
+}
+
+.btn-editar:hover {
+    background-color: #4cae4c;
+}
+
+.btn-eliminar:hover {
+    background-color: #c9302c;
+}
+
+/* Estilos para el modal de edición */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 8px;
+    position: relative;
+}
+
+.cerrar-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.cerrar-modal:hover,
+.cerrar-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-body label {
+    display: block; /* Asegura que las etiquetas del modal también sean responsive */
+    width: auto;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+#modal-body input[type="text"],
+#modal-body input[type="number"],
+#modal-body input[type="date"],
+#modal-body select {
+    width: 100%; /* Inputs del modal ocupan todo el ancho */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+#guardar-edicion-btn {
+    margin-top: 15px;
+    font-size: 1em;
+    padding: 10px 20px; /* Un poco más de padding para que sea más fácil de tocar */
+}
+
+footer {
+    text-align: center;
+    padding-top: 20px;
+    color: #777;
+    border-top: 1px solid #eee;
+    font-size: 0.9em;
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    button {
+        font-size: 0.9em;
+    }
+
+    thead th,
+    tbody td {
+        padding: 8px;
+        font-size: 0.8em;
+    }
+
+    .acciones-columna {
+        display: flex;
+        flex-direction: column; /* Apilar los botones en pantallas pequeñas */
+        align-items: center;
+    }
+
+    .btn-editar, .btn-eliminar {
+        margin-bottom: 5px;
+        margin-right: 0;
+        width: 80%; /* Hacer los botones más anchos en pantallas pequeñas */
+    }
+
+    .modal-content {
+        margin-top: 20%; /* Ajustar la posición del modal en pantallas pequeñas */
+        padding: 15px;
+    }
+
+    .cerrar-modal {
+        font-size: 24px;
+    }
+
+    #guardar-edicion-btn {
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+}
+
+/* Media Query para pantallas aún más pequeñas (móviles) */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    .formulario-tarjeta h3, .formulario-transaccion h3 {
+        font-size: 1em;
+    }
+
+    thead {
+        display: none; /* Ocultar encabezados de tabla en móviles */
+    }
+
+    tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    tbody td {
+        display: flex;
+        text-align: left;
+        border-bottom: none;
+        padding: 5px 0;
+    }
+
+    tbody td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 120px;
+        margin-right: 10px;
+    }
+
+    .acciones-columna {
+        flex-direction: row; /* Volver a la disposición horizontal en algunos casos */
+        justify-content: space-around;
+    }
+
+    .btn-editar, .btn-eliminar {
+        width: auto;
+        margin: 0 5px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin-top: 10%;
+    }
+}
+
+.disablebtn {
+    // background-color: #6c757d; /* Gray color for disabled state */
+    color: #fff; /* White text */
+    cursor: not-allowed; /* Show not-allowed cursor */
+    opacity: 0.65; /* Slightly transparent */
+    pointer-events: none; /* Disable all pointer events */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.disablebtn:hover {
+    // background-color: #6c757d; /* Keep the same gray color on hover */
+    opacity: 0.65; /* Maintain the same transparency */
+}
+
+
+
+//modal 
+.mi-modal-personalizado {
+  z-index: 1051 !important; /* Un valor mayor que el z-index predeterminado de Bootstrap (que suele ser alrededor de 1050) */
+}

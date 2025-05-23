@@ -1,0 +1,54 @@
+<main>
+    <section class="overview">
+        <h2>Resumen</h2>
+        <div class="summary-cards">
+            <div class="card total-expenses">
+                <h3>Gastos Totales</h3>
+                <p>{{ totalAmount() | currency:'CLP':'$':'1.0-0':'es-CL' }}</p>
+            </div>
+            <div class="card total-income">
+                <h3>Ingresos Totales</h3>
+                <p>{{ userLogin()?.user?.salary| currency:'CLP':'$':'1.0-0':'es-CL' }}</p>
+            </div>
+            <div class="card balance">
+                <h3>Balance</h3>
+                <p>{{ balance() | currency:'CLP':'$':'1.0-0':'es-CL' }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="charts">
+        <h2>Análisis de Gastos</h2>
+        <div class="chart-container">
+            <app-chartjs [chartLabels]="chartLabels()"
+            [chartData]="chartData()"
+            [backgroundColor]="chartBackgroundColor()"
+            [borderColor]="chartborderColor()"></app-chartjs>
+        </div>
+    </section>
+
+    <section class="recent-expenses">
+        <h2>Gastos Recientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of expenses() | slice:0:10; track item._id) {
+                <tr>
+
+                        <td>{{item.description}}</td>
+                        <td>{{item.category}}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{item.amount | currency:'CLP':'$':'1.0-0':'es-CL'}}</td>
+                    </tr>
+                }
+                </tbody>
+        </table>
+    </section>
+</main>

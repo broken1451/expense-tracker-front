@@ -1,0 +1,12 @@
+.chart-container-responsive {
+    width: 100%; /* El contenedor ocupa el 100% del ancho de su padre */
+    max-width: 400px; /* Opcional: establece un ancho máximo si lo deseas */
+    height: auto; /* La altura se ajustará proporcionalmente */
+    margin: 15px auto; /* Centra el contenedor y añade un poco de margen */
+}
+
+.chart-container-responsive canvas {
+    display: block; /* Evita espacios extra debajo del canvas */
+    width: 100% !important; /* El canvas ocupa el 100% del ancho de su contenedor */
+    height: auto !important; /* La altura se ajusta proporcionalmente */
+}

@@ -1,0 +1,67 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+
+main {
+    padding: 15px; /* Ajuste de padding */
+    min-height: calc(100vh - 100px); /* Ajustar según la altura del header y footer */
+}
+
+
+
+.summary-cards {
+    display: flex;
+    gap: 10px; /* Ajuste de espacio */
+    margin-bottom: 15px; /* Ajuste de margen */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en pantallas pequeñas */
+}
+
+.summary-cards .card {
+    background-color: #fff;
+    padding: 10px; /* Ajuste de padding */
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    flex-basis: calc(50% - 10px); /* Dos tarjetas por fila en pantallas medianas */
+    text-align: center;
+    box-sizing: border-box; /* Importante para el ancho con padding y border */
+}
+
+.summary-cards .card h3 {
+    margin-top: 0;
+    color: #555;
+    font-size: 1.1rem; /* Ajuste de tamaño de fuente */
+}
+
+/* Media query para pantallas más pequeñas (ej: móviles) */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column; /* Navegación en columna */
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .summary-cards {
+        flex-direction: column; /* Tarjetas en columna */
+    }
+
+    .summary-cards .card {
+        flex-basis: 100%;
+    }
+}
+
+/* Media query para pantallas medianas (ej: tablets) */
+@media (min-width: 601px) and (max-width: 992px) {
+    .summary-cards .card {
+        flex-basis: calc(50% - 10px); /* Dos tarjetas por fila */
+    }
+}

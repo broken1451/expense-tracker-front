@@ -1,0 +1,201 @@
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* Ajuste para pantallas más pequeñas */
+    max-width: 500px;
+    /* Máximo ancho en pantallas grandes */
+    text-align: center;
+    margin: auto;
+    margin-top: 10%;
+
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.login-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+.links {
+    margin-top: 20px;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Media query para pantallas más pequeñas (ej: móviles) */
+@media (max-width: 600px) {
+    .login-container {
+        padding: 20px;
+        border-radius: 6px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"] {
+        font-size: 14px;
+    }
+
+    .login-button {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    .links a {
+        font-size: 12px;
+        margin: 0 5px;
+    }
+}
+
+.input-group {
+    position: relative;
+    /* Necesario para posicionar el icono absolutamente dentro */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    padding-right: 30px;
+    /* Espacio para el icono */
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    /* Evita que el texto del icono se seleccione */
+    color: #777;
+    /* Un color grisáceo para que no destaque demasiado */
+}
+
+
+//
+.loading-bars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.bar {
+    width: 10px;
+    height: 30px;
+    background-color: #007bff;
+    margin: 0 5px;
+    border-radius: 5px;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+.loading-bars .bar:nth-child(2) {
+    animation-delay: -1.0s;
+}
+
+.loading-bars .bar:nth-child(3) {
+    animation-delay: -0.8s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-20px);
+    }
+}
+
+.disablebtn {
+    // background-color: #6c757d; /* Gray color for disabled state */
+    color: #fff;
+    /* White text */
+    cursor: not-allowed;
+    /* Show not-allowed cursor */
+    opacity: 0.65;
+    /* Slightly transparent */
+    pointer-events: none;
+    /* Disable all pointer events */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.disablebtn:hover {
+    // background-color: #6c757d; /* Keep the same gray color on hover */
+    opacity: 0.65;
+    /* Maintain the same transparency */
+}

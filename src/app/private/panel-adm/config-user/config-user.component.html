@@ -1,0 +1,203 @@
+@let usersBd = users();
+
+<main class="users-container">
+    <h2>Gestión de Usuarios</h2>
+    <button class="add-user-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir Nuevo Usuario</button>
+    <section class="user-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de Usuario</th>
+                    <th>Correo Electrónico</th>
+                    <th>Rol</th>
+                    <th>Salario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of usersBd; track item._id) {
+                    <tr>
+                        <td data-column="ID">{{item._id}}</td>
+                        <td data-column="Usuario">{{item.name}} {{item.last_name}}</td>
+                        <td data-column="Email">{{item.email}}</td>
+                        <td data-column="Rol">{{item.roles}}</td>
+                        <td data-column="Rol">{{item.salary}}</td>
+                        <td data-column="Acciones" class="actions">
+                            <div class="action-buttons">
+                                <button data-bs-toggle="modal" data-bs-target="#staticBackdrop2"  class="action-button edit-button" (click)="updateUser(item)">Editar</button>
+                                <button class="action-button delete-button" (click)="deleteUser(item)">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+
+   <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="add-user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="new-username">Nombre de Usuario:</label>
+                <input type="text" id="new-username" name="new-username" formControlName="name" required>
+                @if (isValidField('name') ) {
+                    <span class="form-text text-danger">
+                        {{getFieldError('name')}}
+                    </span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="new-apellido">Apellido de Usuario:</label>
+                <input type="text" id="new-apellido" formControlName="last_name" name="new-apellido" required>
+                @if (isValidField('last_name') ) {
+                    <span class="form-text text-danger">
+                        {{getFieldError('last_name')}}
+                    </span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="new-email">Correo Electrónico:</label>
+                <input type="email" id="new-email" name="new-email" required formControlName="email">
+                @if (isValidField('email') ) {
+                    <span class="form-text text-danger">
+                        {{getFieldError('email')}}
+                    </span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="new-password">Contraseña de Usuario:</label>
+                <div style="position: relative;">
+                    <input [type]=" !showEye() ? 'password': 'text'" id="new-password" name="new-password"
+                        formControlName="password" required>
+                    <span (click)="showHide()" class="toggle-password" id="togglePassword"
+                        style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                        <i class="far" [ngClass]="{ 'fa-eye-slash': !showEye(), 'fa-eye': showEye() }"></i>
+                    </span>
+                    @if (isValidField('password')) {
+                        <span class="form-text text-danger">
+                            La contraseña debe de ser mayor de 6 caracteres.
+                        </span>
+                        }
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="repeat-password">Repita Contraseña:</label>
+                <div style="position: relative;">
+                    <input [type]=" !showEye1() ? 'password': 'text'" id="repeat-password"
+                        formControlName="password2" name="repeat-password" required>
+                    <span (click)="showHide1()" class="toggle-password" id="toggleRepeatPassword"
+                        style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                        <i class="far" [ngClass]="{ 'fa-eye-slash': !showEye1(), 'fa-eye': showEye1() }"></i>
+                    </span>
+                    @if (isValidField('password2')) {
+                        <span class="form-text text-danger">
+                            Las contraseñas deben de ser iguales
+                        </span>
+                        }
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="new-salary">Salario Usuario:</label>
+                <input type="number" id="new-salary" name="new-salary" required formControlName="salary">
+                @if (isValidField('salary') ) {
+                    <span class="form-text text-danger">
+                        {{getFieldError('salary')}}
+                    </span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Roles permitidos:</label>
+                <select formControlName="selectedOption" (change)="addOptionToFormArray()">
+                    <option value="" disabled selected>Seleccione los roles</option>
+                    <option style="color: black!important; " *ngFor="let option of roles()" [value]="option.value">
+                        {{ option.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Select Options:</label>
+                <div formArrayName="selectedOptions">
+                    <div *ngFor="let control of selectedOptions.controls; let i = index" class="selected-option-container">
+                        <input type="text" [formControlName]="i" readonly>
+                        <button type="button" class="remove-role-button" (click)="removeSelectedOption(i)">
+                            <i class="fas fa-times"></i> </button>
+                    </div>
+                </div>
+            </div>
+
+    
+            <div class="modal-footer">
+                <button [ngClass]="{'disablebtn': userForm.invalid}" [disabled]="userForm.invalid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Nuevo Usuario</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cleanModalNewUser()">Close</button>
+              </div>
+        </form>
+      
+    </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="edit-user-form" [formGroup]="userFormEdited" (ngSubmit)="onSubmitEdit()">
+
+            <div class="form-group">
+                <label for="new-username">Nombre de Usuario:</label>
+                <input type="text" id="new-username" name="new-username" formControlName="name" required>
+            </div>
+            <div class="form-group">
+                <label for="new-apellido">Apellido de Usuario:</label>
+                <input type="text" id="new-apellido" formControlName="last_name" name="new-apellido" required>
+            </div>
+            <div class="form-group">
+                <label for="new-email">Correo Electrónico:</label>
+                <input type="email" id="new-email" name="new-email" required formControlName="email">
+            </div>
+
+            <div class="form-group">
+                <label for="new-salary">Salario Usuario:</label>
+                <input type="number" id="new-salary" name="new-salary" required formControlName="salary">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Roles permitidos:</label>
+                <select formControlName="selectedOption" (change)="addOptionToFormArray2()">
+                    <option value="" disabled selected>Seleccione los roles</option>
+                    <option style="color: black!important; " *ngFor="let option of roles()" [value]="option.value">
+                        {{ option.name }}
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label>
+                    Select Options:</label>
+                <div formArrayName="selectedOptions">
+                    <div *ngFor="let control of selectedOptions2.controls; let i = index" class="selected-option-container">
+                        <input type="text" [formControlName]="i" readonly>
+                        <button type="button" class="remove-role-button" (click)="removeSelectedOption2(i)">
+                            <i class="fas fa-times"></i> </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button  [ngClass]="{'disablebtn': userFormEdited.invalid}" [disabled]="userFormEdited.invalid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Nuevo Usuario</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+        </form>
+    </div>
+    </div>
+</div>
+
+
+</main>

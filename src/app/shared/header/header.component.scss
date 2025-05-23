@@ -1,0 +1,51 @@
+
+header {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem; /* Ajuste de padding */
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que los elementos de navegación se envuelvan */
+}
+
+nav ul li {
+    margin: 5px 10px; /* Ajuste de márgenes */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: block; /* Para que el padding funcione correctamente */
+    padding: 8px 12px; /* Añadir padding a los enlaces */
+    border-radius: 4px; /* Opcional: bordes redondeados */
+}
+
+nav ul li a:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1); /* Opcional: feedback al pasar el ratón */
+}
+
+nav ul li a.active {
+    font-weight: bold;
+}
+
+header > div span i.fas.fa-user { /* Estilo para el icono de Font Awesome */
+    font-size: 1.1rem; /* Ajusta el tamaño del icono */
+    color: #f8f9fa; /* Ajusta el color del icono */
+    vertical-align: middle; /* Alinea verticalmente el icono con el texto */
+}
+
+header > div span i.material-icons { /* Estilo para el icono de Material Icons */
+    font-size: 1.1rem; /* Ajusta el tamaño del icono */
+    color: #f8f9fa; /* Ajusta el color del icono */
+    vertical-align: middle; /* Alinea verticalmente el icono con el texto */
+}
+
