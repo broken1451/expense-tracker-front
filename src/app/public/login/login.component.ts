@@ -31,7 +31,7 @@ export class LoginComponent  implements OnInit {
   });
 
   get formsValue () {
-    return this.loginForm.controls; 
+    return this.loginForm.controls;
   }
 
   constructor (){
