@@ -79,7 +79,7 @@
                     <input type="text" id="descripcion-transaccion" formControlName="description">
                 </div>
                 <div>
-                    <label for="monto-transaccion">Monto Total: {{montoTotal()}}</label>
+                    <label for="monto-transaccion">Monto Total:</label>
                     <input type="number" id="monto-transaccion" (input)="calevent($event)"
                         formControlName="totalAmount">
                 </div>
@@ -92,12 +92,12 @@
                     <input type="date" id="fecha-transaccion" [min]="minDatePaid()" formControlName="nextPayment">
                 </div>
                 <div>
-                    <label for="numero-cuotas">Número de Cuotas:{{nroCuota()}}</label>
+                    <label for="numero-cuotas">Número de Cuotas:</label>
                     <input type="number" id="numero-cuotas" value="1" min="1" (input)="calcularCuota($event)"
                         formControlName="installments">
                 </div>
                 <div>
-                    <label for="interes-compra-porcentaje">Interés de la Compra (%):{{interesCompra()}}</label>
+                    <label for="interes-compra-porcentaje">Interés de la Compra (%):</label>
                     <input type="number" id="interes-compra-porcentaje" (input)="calInteres($event)"
                         formControlName="interestPurchase">
                 </div>
