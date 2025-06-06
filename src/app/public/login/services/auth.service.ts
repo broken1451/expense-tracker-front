@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginReq, LoginResponse } from '../interfaces/login.interface';
 import { environment } from '../../../../environments/environment';
-import { delay, tap } from 'rxjs';
+import { catchError, delay, tap, throwError } from 'rxjs';
 import { RegisterReq } from '../interfaces/register.interface';
 import { ResponseUserCreated } from '../../register/interfaces/register.interface';
 
@@ -35,10 +35,14 @@ export class AuthService {
         this.userLogin.set(res);
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res));
+      }),
+      catchError((error) => {
+        return throwError(() => {
+          return new Error(error);
+        });
       })
     );
   }
-  
 
   public logout() {
     this.userLogin.set(null);
