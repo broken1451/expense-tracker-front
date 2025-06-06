@@ -21,6 +21,7 @@ export class UserService {
 
   public getUsers() {
     return this.httpClient.get<UserResponse>(`${environment.apiUrl}/auth`).pipe( 
+      delay(3000),
       tap((res: UserResponse) => {
         this._users.set(res.users.filter(user => user.isActive !== false));
       })

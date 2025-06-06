@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { Router } from '@angular/router';
 import { RegisterReq } from '../login/interfaces/register.interface';
 import { RegisterService } from './service/register.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../login/services/auth.service';
 @Component({
   selector: 'app-register',
   imports: [CommonModule, ReactiveFormsModule, LoadingComponent],
@@ -17,9 +18,11 @@ export class RegisterComponent {
 
   private readonly router: Router = inject(Router);
   private readonly registerService: RegisterService = inject(RegisterService);
+  public authService: AuthService = inject(AuthService);
   private readonly fb: FormBuilder = inject(FormBuilder);
   public loading = signal(false);
   public show = signal(true);
+  public userLogin = this.registerService.user;
 
   public formRegister = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(1), Validators.pattern(/^[a-zA-Z\s]*$/)]],
@@ -28,6 +31,14 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
     salary: ['', [Validators.required, Validators.minLength(3), Validators.max(10000000), Validators.pattern(/^[0-9]*$/)]],
   });
+
+  constructor (){
+    // effect(() => {
+    //   if (this.userLogin()) {
+    //     this.router.navigate(['/private/dashboard']);
+    //   }
+    // }, { manualCleanup: true });
+  }
 
   campoNoEsValido(campo: 'name' | 'lastName' | 'email' | 'password' | 'salary'): string | boolean {
     const control = this.formRegister.get(campo);
@@ -79,10 +90,11 @@ export class RegisterComponent {
     }
     this.loading.set(true);
     this.show.set(false);
-    this.registerService.register(body).subscribe({
+    this.authService.register(body).subscribe({
       next: (res) => {
         this.loading.set(false);
         this.show.set(true);
+        this.router.navigate(['/private/dashboard']);
       },
       error: async (err) => {
         console.log('err', err);

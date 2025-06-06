@@ -1,0 +1,65 @@
+@let usersDB = users();
+
+
+<main class="dashboard-container">
+    <h2>Resumen del Sistema</h2>
+
+    <section class="info-cards">
+        <div class="card">
+            @if (usersDB?.length! > 0) {
+                <h3>Usuarios Activos</h3>
+                <p class="value">{{usersDB?.length}}</p>
+            } @else {
+                <div class="card-value placeholder-text">Esperando información...</div>
+            }
+        </div>
+        <div class="card">
+            @if (userCreatedToday()) {
+                <h3>Nuevos Registros (Hoy)</h3>
+                <p class="value">{{userCreatedToday()}}</p>
+            } @else {
+                 <div class="card-value placeholder-text">Esperando información...</div>
+            }
+        </div>
+        <div class="card">
+            @if (day()) {
+                <h3>Dia</h3>
+                <p class="value">{{day()}}</p>
+            } @else {
+                <div class="card-value placeholder-text">Esperando información...</div>
+            }
+        </div>
+        <div class="card">
+            @if (hour()) {
+                <h3>Hora</h3>
+                <p class="value">{{hour()}}</p>
+            } @else {
+                <div class="card-value placeholder-text">Esperando información...</div>
+            }
+        </div>
+        <div class="card">
+            @if (details().bdSize) {
+                <h3>Espacio Utilizado</h3>
+                <p class="value">{{details().bdSize}}</p>
+            } @else {
+                <div class="card-value placeholder-text">Esperando información...</div>
+            }
+        </div>
+        <div class="card">
+            @if (version()) {
+                <h3>Versión del Software</h3>
+                <p class="value">{{version()}}</p>
+            } @else {
+                <div class="card-value placeholder-text">Esperando información...</div>
+            }
+        </div>
+    </section>
+
+    <!-- <section>
+            <h2>Gráficos (Ejemplo)</h2>
+            <p>Aquí podrían ir gráficos utilizando alguna librería como Chart.js o similares.</p>
+            <div style="background-color:#f0f0f0; padding: 20px; border-radius: 6px; text-align: center;">
+                [Placeholder para Gráfico]
+            </div>
+        </section> -->
+</main>

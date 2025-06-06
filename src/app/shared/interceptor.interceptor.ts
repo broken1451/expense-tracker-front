@@ -2,6 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 export const GlobalInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -38,7 +39,9 @@ export const GlobalInterceptor: HttpInterceptorFn = (req, next) => {
         return event;
       }),
       catchError(error => {
-        return throwError(error);
+        return throwError( () => {
+          return new Error(error);
+        });
       })
     );
   }
@@ -56,25 +59,33 @@ export const GlobalInterceptor: HttpInterceptorFn = (req, next) => {
         return event;
       }),
       catchError(error => {
-        return throwError(error);
+        return throwError(() => {  
+          return new Error(error);
+        });
       })
     );
   }
-
-
 
   return next(req).pipe(
     map(event => {
       return event;
     }),
-    catchError(error => {
-      console.log({ error });
-      if (error?.status === 401 || error?.status === 403) {
-      //   this.globalService.token = '';
-        sessionStorage?.clear();
-        router.navigate(['/public/login']);
+    catchError( (error) => {
+      console.log({ error: error});
+      if (error.error.statusCode === 401 || error.error.statusCode === 403) {        
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `no tienes permisos para acceder a este recurso`,
+          timer: 2000,
+          showConfirmButton: false,
+        });      
+        router.navigate(['/public/dashboard']);  
       }
-      return throwError(error);
+      return throwError(() =>{
+        console.error('Error in interceptor:', error);
+        return new Error(error);
+      });
     })
   );
 };

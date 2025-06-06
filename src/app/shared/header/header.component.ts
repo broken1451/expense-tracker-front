@@ -3,6 +3,7 @@ import { AuthService } from '../../public/login/services/auth.service';
 import { NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+import { RegisterService } from '../../public/register/service/register.service';
 
 export let browserRefresh = false;
 
@@ -15,16 +16,18 @@ export let browserRefresh = false;
 export class HeaderComponent {
 
   private authService: AuthService = inject(AuthService);
+  private readonly registerService: RegisterService = inject(RegisterService);
   private router: Router = inject(Router);
   public userLogin = this.authService.user;
   public isVisible = signal<boolean>(false);
   public isAdmin = signal<boolean>(false);
   public isVisibleMenu = signal<boolean>(false);
-
+  public userLoginRegister = this.registerService.user;
 
   constructor() {
     effect(() => {
-      if (this.userLogin()?.user.roles.includes('ADMIN')) {
+      console.log(this.userLogin())
+      if (this.userLogin()?.user.roles.includes('ADMIN') || this.userLoginRegister()?.returnUserCreated.roles.includes('ADMIN')) {
         this.isAdmin.set(true);
         this.isVisibleMenu.set(true);
         this.isVisibleMenu.set(JSON.parse(localStorage.getItem('isVisible')!))
@@ -43,6 +46,7 @@ export class HeaderComponent {
         event.url === event.urlAfterRedirects
       ) {
           this.isVisibleMenu.set(false)
+          this.router.navigate(['/private/dashboard']);
           localStorage.setItem('isVisible', JSON.stringify(this.isVisibleMenu()));
       }
     })
