@@ -17,8 +17,13 @@ const routes: Routes = [
         canActivate: [authGuard],
       },
       {
+        path: 'resume-system',
+        loadChildren: () => import('./resume-system/resume-system.routes'), 
+        canActivate: [authGuard],
+      },
+      {
         path: '**',
-        redirectTo: 'config-user',
+        redirectTo: 'resume-system',
       }
     ]
   },

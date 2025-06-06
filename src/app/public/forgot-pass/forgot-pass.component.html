@@ -1,5 +1,5 @@
 <div class="login-container">
-    <h1>Crea tu cuenta</h1>
+    <h1>Recuperar contraseña</h1>
     <form id="login-form" [formGroup]="formRecoverPass" (ngSubmit)="onSubmit()" style="margin-bottom: 26px;">
 
         <div class="input-group">
@@ -24,7 +24,7 @@
 
 
         <button type="submit"
-            class="login-button">Crear Cuenta</button>
+            class="login-button">Actualizar contraseña</button>
         <div class="links">
             @if (show()) {
                 <a style="cursor: pointer;" (click)="goto('/public/login')">Ir a login</a><br>

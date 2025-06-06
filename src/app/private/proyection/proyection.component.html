@@ -1,0 +1,46 @@
+    <main class="projection-container">
+        <section class="input-section">
+            <h2>Calcula tu Proyección de Ahorros</h2>
+            <form id="projection-form" [formGroup]="proyectionForm" (ngSubmit)="calculateProjection()">
+                <div class="form-group">
+                    <label for="current-savings">Ahorros Actuales:</label>
+                    <input type="number" id="current-savings" formControlName="currentSavings"  name="current-savings" min="0" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="monthly-contribution">Contribución Mensual:</label>
+                    <input type="number" id="monthly-contribution" formControlName="monthlyContribution" name="monthly-contribution" min="0" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="target-amount">Cantidad Meta de Ahorro (Opcional):</label>
+                    <input type="number" id="target-amount" formControlName="savingsGoalAmount" name="target-amount" min="0" value="">
+                </div>
+                <div class="form-group">
+                    <label for="time-period">Periodo de Tiempo (en meses):</label>
+                    <input type="number" id="time-period" formControlName="timePeriod" name="time-period" min="1" value="12" required>
+                </div>
+                <button  type="submit" class="btn btn-success">Calcular Proyección</button>
+            </form>
+        </section>
+
+        <section class="result-section">
+            <h2>Resultados de la Proyección</h2>
+            <div id="projection-results">
+                <p>Ahorros Estimados al Final del Periodo:</p>
+                <strong id="estimated-savings">{{estimatedsavings()}}</strong>
+                @if (showtimetotarget()) {
+                    <p id="time-to-target">Tiempo estimado para alcanzar la meta: <strong id="months-to-target"></strong>{{monthstotarget()}} meses.</p>
+                }
+            </div>
+        </section>
+
+        <section class="result-section">
+            <h2>Resultados de la Proyección</h2>
+            <div id="projection-results">
+                <p>Ahorros Estimados al Final del Periodo:</p>
+                <strong id="estimated-savings2">{{estimatedsavings2()}}</strong>
+            </div>
+            @if (currentSavings() != "") {
+                <app-grafic [chartData]="chartData()" [chartLabels]="chartLabels()" [currentSavings]="currentSavings()" [estimatedsavings]="estimatedsavings()" />
+            }
+        </section>
+    </main>
