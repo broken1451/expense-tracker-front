@@ -72,10 +72,11 @@ export class ForgotPassComponent {
         await Swal.fire({
           icon: "success",
           title: "Correo de confirmación enviado",
-          text: `Se ha enviado un correo de confirmación para el cambio de contraseña a ${res.email}`,
+          text: `Se ha enviado un correo de confirmación para el cambio de contraseña a ${formData.email}`,
           timer: 4000,
           showConfirmButton: false,
         });
+        this.formRecoverPass.reset();
       },
       error: (err) => {
         console.error(err);
