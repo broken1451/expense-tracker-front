@@ -65,15 +65,7 @@ export class LoginComponent  implements OnInit {
         this.userLogin();
       },
       error: async (err) => {
-      console.log('err', err);
       this.loading.set(false);
-       await Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: `${err.error.message}`,
-          timer: 2000,
-          showConfirmButton: false,
-        });
         this.loading.set(false);
       },
       complete: () => {

@@ -82,6 +82,19 @@ export const GlobalInterceptor: HttpInterceptorFn = (req, next) => {
         });      
         router.navigate(['/public/dashboard']);  
       }
+
+      if (error.error.statusCode === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error.error.message}`,
+          timer: 2000,
+          showConfirmButton: false,
+        });    
+        return throwError(() => {
+          return new Error(error);
+        });
+      }
       return throwError(() =>{
         console.error('Error in interceptor:', error);
         return new Error(error);
