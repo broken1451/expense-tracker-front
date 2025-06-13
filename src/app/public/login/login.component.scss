@@ -178,3 +178,12 @@ input[type="password"] {
     // background-color: #6c757d; /* Keep the same gray color on hover */
     opacity: 0.65; /* Maintain the same transparency */
 }
+
+.disabled-div {
+    pointer-events: none;
+    opacity: 0.5;
+    /* Optional: Add additional styles to convey disabled state */
+    background-color: #f2f2f2;
+    color: #999;
+    cursor: not-allowed;
+}

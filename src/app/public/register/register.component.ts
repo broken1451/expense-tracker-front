@@ -86,7 +86,8 @@ export class RegisterComponent {
       last_name: this.formRegister.get('lastName')?.value!,
       email: this.formRegister.get('email')?.value!,
       password: this.formRegister.get('password')?.value!,
-      salary: Number(this.formRegister.get('salary')?.value!)
+      salary: Number(this.formRegister.get('salary')?.value!),
+      google: false
     }
     this.loading.set(true);
     this.show.set(false);
@@ -99,14 +100,7 @@ export class RegisterComponent {
       error: async (err) => {
         console.log('err', err);
         this.loading.set(false);
-        this.show.set(false);
-        await Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: `${err.error.message}`,
-          timer: 2000,
-          showConfirmButton: false,
-        });
+        this.show.set(true);
       },
     })
   }

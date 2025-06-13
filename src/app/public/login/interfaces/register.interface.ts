@@ -4,6 +4,7 @@ export interface RegisterReq {
     email:     string;
     password:  string;
     salary:    number;
+    google?:   boolean;
 }
 
 

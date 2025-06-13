@@ -26,7 +26,6 @@ export class HeaderComponent {
 
   constructor() {
     effect(() => {
-      console.log(this.userLogin())
       if (this.userLogin()?.user.roles.includes('ADMIN') || this.userLoginRegister()?.returnUserCreated.roles.includes('ADMIN')) {
         this.isAdmin.set(true);
         this.isVisibleMenu.set(true);
