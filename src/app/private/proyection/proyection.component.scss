@@ -1,124 +1,116 @@
-.projection-container {
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+    gap: 30px;
 }
 
-.input-section, .result-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+
+.section-box {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 25px;
+    background-color: #fdfdff;
 }
 
-.input-section h2, .result-section h2 {
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
+.section-box h2 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
+.section-box h2 .icon {
+    font-size: 1.2em;
+    color: #28a745;
+}
+
+/* Podrías usar íconos de FontAwesome */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    color: #555;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #555;
 }
 
 .form-group input[type="number"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
 }
 
-.form-group button {
+.form-group input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+button {
     background-color: #28a745;
     color: white;
-    padding: 12px 20px;
+    padding: 14px 25px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-size: 1.1em;
     cursor: pointer;
-    font-size: 18px;
     transition: background-color 0.3s ease;
     width: 100%;
-}
-
-.form-group button:hover {
-    background-color: #1e7e34;
-}
-
-.result-section #projection-results {
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.result-section #estimated-savings, #estimated-savings2 {
-    font-size: 1.5rem;
-    color: #28a745;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.result-section #time-to-target {
-    margin-top: 10px;
-    color: #007bff;
-}
-
-/* Media Queries para Responsividad */
-@media (min-width: 768px) {
-    .projection-container {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .input-section, .result-section {
-        width: calc(50% - 10px);
-    }
-}
-
-@media (max-width: 600px) {
-    .projection-container {
-        padding: 10px;
-    }
-
-    .input-section h2, .result-section h2 {
-        font-size: 1.5rem;
-    }
-
-    .form-group label {
-        font-size: 14px;
-    }
-
-    .form-group input[type="number"],
-    .form-group button,
-    .result-section #projection-results {
-        font-size: 1rem;
-    }
-
-    .result-section #estimated-savings, #estimated-savings2 {
-        font-size: 1.3rem;
-    }
-}
-
-#savingsChart {
-    width: 100%;
-    max-height: 400px; /* Ajusta la altura máxima según necesites */
     margin-top: 20px;
 }
 
-/* Media Queries para Responsividad del Gráfico */
-@media (min-width: 768px) {
-    /* El gráfico estará al 100% del ancho de su contenedor */
+button:hover {
+    background-color: #218838;
 }
 
-@media (max-width: 600px) {
-    /* El gráfico también estará al 100% del ancho */
+.results-summary {
+    text-align: center;
+    padding: 15px;
+    background-color: #e9f7ef;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.results-summary p {
+    margin: 8px 0;
+    font-size: 1.1em;
+}
+
+.results-summary strong {
+    color: #28a745;
+    font-size: 1.6em;
+}
+
+.results-summary #estimated-savings {
+    font-size: 2.2em;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.results-summary #time-to-target {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    margin-top: 20px;
 }

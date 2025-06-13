@@ -1,6 +1,8 @@
 export interface ResponseUserCreated {
     returnUserCreated: ReturnUserCreated;
+    user: ReturnUserCreated;
     token:             string;
+    exist?:            boolean;
 }
 
 export interface ReturnUserCreated {

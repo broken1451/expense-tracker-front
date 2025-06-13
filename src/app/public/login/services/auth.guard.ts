@@ -10,9 +10,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router: Router = inject(Router);
   const registerService: RegisterService = inject(RegisterService);
 
-  console.log('authGuard activated');
-  console.log('Current user:', authService.user());
-  console.log('Register service user:', registerService.user());
   if (!authService.user()) {
     console.warn('User is not authenticated, redirecting to login page.');
     router.navigate(['/public/login']);

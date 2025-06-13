@@ -22,6 +22,7 @@ export class LoginComponent  implements OnInit {
 
   public userLogin = this.authService.user;
   public loading = signal(false);
+  public loadingGoogle = this.authService.loadingGoogle;
 
 
   public loginForm = this.fb.group({
@@ -43,7 +44,7 @@ export class LoginComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.authService.initializeGoogleSignIn();
   }
 
   goto(path: string): void {

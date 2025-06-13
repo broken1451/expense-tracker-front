@@ -21,5 +21,6 @@ export interface User {
     created_at:      Date;
     update_at:       Date;
     update_at_login: Date;
+    google?:         boolean;
     salary:          number;
 }
