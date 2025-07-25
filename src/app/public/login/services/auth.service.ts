@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { catchError, delay, tap, throwError } from 'rxjs';
 import { RegisterReq } from '../interfaces/register.interface';
 import { ResponseUserCreated } from '../../register/interfaces/register.interface';
+import {jwtDecode} from 'jwt-decode';
 
 declare const google: any;
 
@@ -17,6 +18,7 @@ export class AuthService {
   private ngZone = inject(NgZone);
   public userLogin = signal<LoginResponse | null>(null);
   public loadingGoogle = signal<boolean>(false);
+  public userImgGoogle = signal<string>('');
 
   public user = computed(() => this.userLogin());
   
@@ -28,6 +30,12 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (token) {
       this.userLogin.set(this.userLogin());
+    }
+
+    const imgGoogle = localStorage.getItem('imgGoogle');
+    console.log('imgGoogle', this.userImgGoogle());
+    if (imgGoogle) {
+      this.userImgGoogle.set(this.userImgGoogle());
     }
   }
   
@@ -51,6 +59,7 @@ export class AuthService {
     this.userLogin.set(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.userImgGoogle.set('');
   }
 
     public register(body: RegisterReq) {
@@ -89,13 +98,15 @@ export class AuthService {
   public handleCredentialResponse(response: any) {
     // response.credential is the JWT token
     // console.log('Encoded JWT ID token: ' + response.credential);
-    
+    const decoded: any = jwtDecode(response.credential);
     // You can decode the JWT token here or send it to your backend for verification
     // For demonstration, we'll just log it
     
     // If using NgZone, ensure any UI updates are run inside Angular's zone
     this.ngZone.run(() => {
        this.loadingGoogle.set(true);
+       this.userImgGoogle.set(decoded.picture || '');
+       localStorage.setItem('imgGoogle', this.userImgGoogle());
        this.loginGoogle(response.credential, true).subscribe({
         next: (res) => {
           console.log('Login successful');

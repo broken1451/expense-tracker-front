@@ -2,12 +2,18 @@
 
 <header>
     <h1>Panel de Gastos</h1>
-    <div
-        style="color: #f8f9fa; font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center;">
-        <span style="margin-right: 0.5rem;">
-            <i class="fas fa-user" *ngIf="userLogin"></i>
-        </span>
-        Usuario: <strong *ngIf="user">{{ user?.user?.email }}</strong>
+    <div class="user-info-container">
+    <div class="user-profile">
+        @if (userImgGoogle) {
+            <img *ngIf="userImgGoogle" [src]="userImgGoogle! | domSeguro" alt="User Profile Photo" class="profile-photo">
+        } @else {
+            <i class="fas fa-user profile-icon"></i>
+        }
+    </div>
+    <div class="user-details">
+        <span class="user-label">Usuario:</span>
+        <strong class="user-email" *ngIf="user">{{ user?.user?.email }}</strong>
+    </div>
     </div>
 
     @if (!isVisibleMenu()) {
@@ -47,6 +53,9 @@
             </li>
             <li routerLinkActive="active" class="submenu" style="position: relative;">
                 <a routerLinkActive="active" [routerLink]="['/private/panel-admin/tdc']" style="display: block;">Gestion de TDC</a>
+            </li>
+            <li routerLinkActive="active" class="submenu" style="position: relative;">
+                <a routerLinkActive="active" [routerLink]="['/private/panel-admin/deudas']" style="display: block;">Deudas</a>
             </li>
             <li routerLinkActive="active" class="submenu" style="position: relative;">
                 <a routerLinkActive="active" style="display: block;" (click)="hideOptions()">Volver</a>

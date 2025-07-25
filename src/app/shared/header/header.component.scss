@@ -49,3 +49,83 @@ header > div span i.material-icons { /* Estilo para el icono de Material Icons *
     vertical-align: middle; /* Alinea verticalmente el icono con el texto */
 }
 
+
+
+  /* Basic styling for the container */
+  .user-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally in its parent */
+    padding: 10px 20px;
+    background-color: #343a40; /* Darker shade for the container background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px auto; /* Center the container itself and add some vertical margin */
+    max-width: fit-content; /* Adjust width to content */
+  }
+
+  /* User profile section (photo/icon) */
+  .user-profile {
+    margin-right: 15px;
+    position: relative;
+  }
+
+  .profile-photo {
+    width: 45px; /* Slightly larger photo */
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff; /* A subtle border in a vibrant color */
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .profile-photo:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+  }
+
+  .profile-icon {
+    font-size: 36px; /* Larger icon */
+    color: #007bff; /* Matching vibrant color for the icon */
+    background-color: #495057; /* Background for the icon if no photo */
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* User details (label and email) */
+  .user-details {
+    display: flex;
+    flex-direction: column; /* Stack label and email */
+    color: #e9ecef; /* Lighter text color for contrast */
+  }
+
+  .user-label {
+    font-size: 0.8rem;
+    color: #adb5bd; /* Slightly muted color for the label */
+    margin-bottom: 2px; /* Small space between label and email */
+  }
+
+  .user-email {
+    font-size: 1.1rem; /* Slightly larger email font */
+    font-weight: 600; /* Bolder email */
+    color: #ffffff; /* Pure white for email for prominence */
+  }
+
+  /* Optional: Add a subtle animation on initial load */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .user-info-container {
+    animation: fadeIn 0.5s ease-out forwards;
+  }

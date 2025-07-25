@@ -10,7 +10,7 @@
                 <label for="category-filter">Categoría:</label>
                 <select id="category-filter" formControlName="orderBy" (change)="onCategoryChange($event)">
                     <option value="" disabled selected>Seleccione una categoría</option>
-                    @for (item of categories(); track item) {
+                    @for (item of categories; track item) {
                         <option [value]="item.value">{{item.name}}</option>
                     }
                 </select>
@@ -33,6 +33,7 @@
                 <button  class="filter-button" (click)="findByLastWeek()">Última Semana</button>
                 <button  class="filter-button" (click)="findByLastMonth()">Último Mes</button>
                 <button  class="filter-button" (click)="findByLast3Months()">Últimos 3 Meses</button>
+                <button  class="filter-button" (click)="generateDetailedPdf()">Download PDF</button>
             </div>
         </form>
         <table id="expenses-table">
@@ -85,7 +86,7 @@
                         <label for="exampleInputPassword1" class="form-label">Categoria</label>
                         <select class="form-select" aria-label="Default select example" formControlName="category">
                             <option value="" disabled selected>Seleccione una categoría</option>
-                            @for (item of categories(); track item) {
+                            @for (item of categories; track item) {
                                 <option [value]="item.value">{{item.name}}</option>
                             }
                           </select>

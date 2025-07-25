@@ -17,12 +17,25 @@ export class ExpenseService {
     return this.Amounts();
   })
 
+  public categories = signal([
+    { value: 'comida', name: 'Comida' },
+    { value: 'transporte', name: 'Transporte' },
+    { value: 'hogar', name: 'Hogar' },
+    { value: 'ocio', name: 'Ocio' },
+    { value: 'salud', name: 'Salud' },
+    { value: 'otros', name: 'Otros' },
+  ]);
+
+    public categoriesCompunted = computed(() => {
+    return this.categories();
+  })
+
   constructor() { }
 
 
 
   public getExpenses() {
-    return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses`).pipe( 
+    return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses`).pipe(
       tap((res: ExpenseResponse) => {
         this._expenses.set(res.expenses);
       })
@@ -33,13 +46,13 @@ export class ExpenseService {
   public addExpense(body: ReqAddExpense) {
     return this.httpClient.post<ExpenseResponseCreated>(`${environment.apiUrl}/expenses`, body).pipe(
       delay(3000),
-      tap((res: ExpenseResponseCreated) => {}),
+      tap((res: ExpenseResponseCreated) => { }),
       take(1)
     );
   }
 
 
-  public findByLastWeek(){
+  public findByLastWeek() {
     return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses/last/find-by-last-week`).pipe(
       tap((res: ExpenseResponse) => {
         this._expenses.set(res.expenses);
@@ -47,7 +60,7 @@ export class ExpenseService {
     );
   }
 
-  public findByLastMonth(){
+  public findByLastMonth() {
     return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses/find/by-last-month`).pipe(
       tap((res: ExpenseResponse) => {
         this._expenses.set(res.expenses);
@@ -55,7 +68,7 @@ export class ExpenseService {
     );
   }
 
-  public findByLast3Months(){
+  public findByLast3Months() {
     return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses/find/by-last-3month`).pipe(
       tap((res: ExpenseResponse) => {
         this._expenses.set(res.expenses);
@@ -64,9 +77,9 @@ export class ExpenseService {
   }
 
 
-  public findByRangeDate(fecha_uno: string, fecha_dos: string){
+  public findByRangeDate(fecha_uno: string, fecha_dos: string) {
     const params = new HttpParams().set('fecha_uno', fecha_uno).set('fecha_dos', fecha_dos);
-    return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses/find/by-range-date`, {params}).pipe(
+    return this.httpClient.get<ExpenseResponse>(`${environment.apiUrl}/expenses/find/by-range-date`, { params }).pipe(
       tap((res: ExpenseResponse) => {
         this._expenses.set(res.expenses);
       })
@@ -74,7 +87,7 @@ export class ExpenseService {
   }
 
 
-  public deleteExpense(id: string){
+  public deleteExpense(id: string) {
     return this.httpClient.delete<ExpenseResponse>(`${environment.apiUrl}/expenses/${id}`).pipe(
       delay(3000),
       tap((res: ExpenseResponse) => {
@@ -83,7 +96,7 @@ export class ExpenseService {
     );
   }
 
-  public updateExpense(id: string, body: ReqUpdateExpense){
+  public updateExpense(id: string, body: ReqUpdateExpense) {
     return this.httpClient.patch<ResponsePatchExpense>(`${environment.apiUrl}/expenses/${id}`, body).pipe(
       delay(3000),
     );
