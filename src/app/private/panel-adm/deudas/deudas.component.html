@@ -1,0 +1,257 @@
+<main class="main-content">
+    <h2 class="section-title">Lista de Deudas</h2>
+
+    <div class="filters">
+        <div class="filter-group">
+            <label for="search-desc">Buscar:</label>
+            <input type="text" id="search-desc" placeholder="Descripción...">
+        </div>
+
+        <div class="filter-group">
+            <label for="debt-type">Tipo de Deuda:</label>
+            <select id="debt-type">
+                <option value="all">Todos</option>
+                <option value="owe-me">Me deben</option>
+                <option value="i-owe">Debo yo</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="person-entity">Persona/Entidad:</label>
+            <input type="text" id="person-entity" placeholder="Nombre de la persona/entidad...">
+        </div>
+
+        <div class="filter-group date-filter">
+            <label for="date-from">Desde:</label>
+            <input type="date" id="date-from" class="date-input">
+        </div>
+
+        <div class="filter-group date-filter">
+            <label for="date-to">Hasta:</label>
+            <input type="date" id="date-to" class="date-input">
+        </div>
+
+        <div class="filter-actions">
+            <button class="btn btn-primary">Buscar por rango</button>
+            <button class="btn btn-secondary">Última Semana</button>
+            <button class="btn btn-secondary">Último Mes</button>
+            <button class="btn btn-secondary">Últimos 3 Meses</button>
+            <button class="btn btn-download">Download PDF</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>DESCRIPCIÓN</th>
+                    <th>TIPO</th>
+                    <th>PERSONA/ENTIDAD</th>
+                    <th>FECHA REGISTRO</th>
+                    <th>FECHA LÍMITE</th>
+                    <th>MONTO</th>
+                    <th>ESTADO</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Préstamo para auto</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Banco XYZ</td>
+                    <td>01/07/2025</td>
+                    <td>01/08/2025</td>
+                    <td>$500.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt123" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cena compartida</td>
+                    <td><span class="badge badge-owe-me">Me deben</span></td>
+                    <td>Juan Pérez</td>
+                    <td>15/06/2025</td>
+                    <td>-</td>
+                    <td>$15.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt124" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Devolución préstamo</td>
+                    <td><span class="badge badge-owe-me">Me deben</span></td>
+                    <td>María Gómez</td>
+                    <td>03/05/2025</td>
+                    <td>03/07/2025</td>
+                    <td>$30.000</td>
+                    <td><span class="status-overdue">Vencido</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt125" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alquiler depto.</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Arrendador ABC</td>
+                    <td>01/07/2025</td>
+                    <td>05/07/2025</td>
+                    <td>$350.000</td>
+                    <td><span class="status-paid">Pagado</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green" disabled>Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt126" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Compra en línea</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Tienda Online S.A.</td>
+                    <td>10/06/2025</td>
+                    <td>20/07/2025</td>
+                    <td>$80.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt127" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Préstamo a amigo</td>
+                    <td><span class="badge badge-owe-me">Me deben</span></td>
+                    <td>Pedro López</td>
+                    <td>05/07/2025</td>
+                    <td>-</td>
+                    <td>$25.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt128" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Factura de luz</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Compañía Eléctrica</td>
+                    <td>01/05/2025</td>
+                    <td>01/06/2025</td>
+                    <td>$45.000</td>
+                    <td><span class="status-overdue">Vencido</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt129" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Reembolso de gastos</td>
+                    <td><span class="badge badge-owe-me">Me deben</span></td>
+                    <td>Empresa ABC</td>
+                    <td>12/04/2025</td>
+                    <td>20/04/2025</td>
+                    <td>$100.000</td>
+                    <td><span class="status-paid">Pagado</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green" disabled>Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt130" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cuota de estudio</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Universidad XYZ</td>
+                    <td>01/07/2025</td>
+                    <td>15/07/2025</td>
+                    <td>$150.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt131" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Venta de bicicleta</td>
+                    <td><span class="badge badge-owe-me">Me deben</span></td>
+                    <td>Lucas Soto</td>
+                    <td>20/06/2025</td>
+                    <td>20/07/2025</td>
+                    <td>$75.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt132" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Factura de agua</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Compañía de Agua</td>
+                    <td>01/06/2025</td>
+                    <td>10/06/2025</td>
+                    <td>$20.000</td>
+                    <td><span class="status-paid">Pagado</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green" disabled>Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt133" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Devolución de material</td>
+                    <td><span class="badge badge-owe-me">Me deben</span></td>
+                    <td>Colega Trabajo</td>
+                    <td>25/05/2025</td>
+                    <td>-</td>
+                    <td>$5.000</td>
+                    <td><span class="status-overdue">Vencido</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt134" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Arriendo de herramientas</td>
+                    <td><span class="badge badge-i-owe">Debo yo</span></td>
+                    <td>Ferretería Central</td>
+                    <td>01/07/2025</td>
+                    <td>08/07/2025</td>
+                    <td>$12.000</td>
+                    <td><span class="status-pending">Pendiente</span></td>
+                    <td class="actions-cell">
+                        <button class="btn-action green">Marcar como Pagado</button>
+                        <button class="btn-action green">Editar</button>
+                        <button class="btn-action red">Eliminar</button>
+                        <a href="debt-details.html?id=debt135" class="btn-action primary">Ver Detalles</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

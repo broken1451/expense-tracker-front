@@ -22,6 +22,11 @@ const routes: Routes = [
         canActivate: [authGuard],
       },
       {
+        path: 'deudas',
+        loadChildren: () => import('./deudas/deudas.routes'),
+        canActivate: [authGuard],
+      },
+      {
         path: '**',
         redirectTo: 'resume-system',
       }
