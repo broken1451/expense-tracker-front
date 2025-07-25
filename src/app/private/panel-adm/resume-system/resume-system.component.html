@@ -18,7 +18,12 @@
                 <h3>Nuevos Registros (Hoy)</h3>
                 <p class="value">{{userCreatedToday()}}</p>
             } @else {
-                 <div class="card-value placeholder-text">Esperando información...</div>
+                @if (users()?.length! > 0) {
+                    <h3>Usuarios Registrados </h3>
+                    <p class="value">{{users()?.length}}</p>
+                } @else {
+                    <div class="card-value placeholder-text">Esperando información...</div>
+                }
             }
         </div>
         <div class="card">
